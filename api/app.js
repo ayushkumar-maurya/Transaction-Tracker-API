@@ -1,15 +1,18 @@
 import express from 'express'
 import dotenv from 'dotenv'
-import DbConn from './db/DbConn.js'
+import DbConn from './configs/DbConn.js'
 import * as log from './utils/log.js'
+
+import homeRoute from './route/HomeRoute.js'
+import bankRoute from './route/bankRoute.js'
+
 
 const app = express()
 dotenv.config()
-DbConn.config()
+DbConn.init()
 
-app.get('/', (req, res) => {
-  res.send('Hello, World!')
-})
+app.use('/', homeRoute)
+app.use('/bank', bankRoute)
 
 const PORT = process.env.PORT
 app.listen(PORT, () => {

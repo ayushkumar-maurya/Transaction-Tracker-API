@@ -4,7 +4,7 @@ import * as log from '../utils/log.js'
 class DbConn {
   static conn = null
 
-  static config() {
+  static init() {
     const info = {
       host: process.env.DB_HOST,
       user: process.env.DB_USERNAME,
