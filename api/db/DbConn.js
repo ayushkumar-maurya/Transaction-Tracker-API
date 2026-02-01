@@ -1,18 +1,18 @@
 import mysql from 'mysql2'
 import * as log from '../utils/log.js'
 
-class Conn {
-  static dbConn = null
+class DbConn {
+  static conn = null
 
-  static initConn() {
-    const configInfo = {
+  static config() {
+    const info = {
       host: process.env.DB_HOST,
       user: process.env.DB_USERNAME,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME
     }
 
-    const tempConn = mysql.createConnection(configInfo)
+    const tempConn = mysql.createConnection(info)
 
     tempConn.connect(err => {
       if(err)
@@ -21,8 +21,8 @@ class Conn {
         log.info(log.fileURLToPath(import.meta.url), 'Database connected successfully!')
     })
 
-    Conn.dbConn = tempConn
+    DbConn.conn = tempConn
   }
 }
 
-export default Conn
+export default DbConn

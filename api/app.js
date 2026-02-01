@@ -1,11 +1,11 @@
 import express from 'express'
 import dotenv from 'dotenv'
-import Conn from './db/Conn.js'
+import DbConn from './db/DbConn.js'
 import * as log from './utils/log.js'
 
 const app = express()
 dotenv.config()
-Conn.initConn()
+DbConn.config()
 
 app.get('/', (req, res) => {
   res.send('Hello, World!')
