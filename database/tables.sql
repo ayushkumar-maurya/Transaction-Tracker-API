@@ -25,7 +25,7 @@ CREATE TABLE bank_transactions (
 );
 
 /*---------------------------------------------------------
-Mutual Fund Transactions
+Stock Transactions
 ---------------------------------------------------------*/
 CREATE TABLE brokerages (
     id INT AUTO_INCREMENT,
@@ -35,19 +35,20 @@ CREATE TABLE brokerages (
     UNIQUE (name)
 );
 
-CREATE TABLE mutual_funds (
+CREATE TABLE stocks (
     id INT AUTO_INCREMENT,
     brokerage_id INT NOT NULL,
     name VARCHAR(50) NOT NULL,
     description VARCHAR(200),
+    mutual_fund BOOLEAN NOT NULL DEFAULT 0,
     PRIMARY KEY (id),
     FOREIGN KEY (brokerage_id) REFERENCES brokerages(id) ON DELETE CASCADE,
     UNIQUE (brokerage_id, name)
 );
 
-CREATE TABLE mutual_fund_transactions (
+CREATE TABLE stock_transactions (
     id INT AUTO_INCREMENT,
-    mutual_fund_id INT NOT NULL,
+    stock_id INT NOT NULL,
     date DATE NOT NULL DEFAULT (CURRENT_DATE),
     description VARCHAR(100),
     deposit DECIMAL(10, 2),
@@ -56,7 +57,7 @@ CREATE TABLE mutual_fund_transactions (
     verified BOOLEAN NOT NULL DEFAULT 0,
     created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (id),
-    FOREIGN KEY (mutual_fund_id) REFERENCES mutual_funds(id) ON DELETE CASCADE,
+    FOREIGN KEY (stock_id) REFERENCES stocks(id) ON DELETE CASCADE,
     CHECK (deposit IS NOT NULL OR withdrawal IS NOT NULL)
 );
 
