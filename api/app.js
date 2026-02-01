@@ -1,9 +1,17 @@
-const express = require('express');
+import express from 'express'
+import dotenv from 'dotenv'
+import Conn from './db/Conn.js'
+import * as log from './utils/log.js'
 
-const app = express();
+const app = express()
+dotenv.config()
+Conn.initConn()
 
 app.get('/', (req, res) => {
-    res.send('Hello, World!');
-});
+  res.send('Hello, World!')
+})
 
-app.listen(3000, () => console.log('Server is started.'));
+const PORT = process.env.PORT
+app.listen(PORT, () => {
+  log.info(log.fileURLToPath(import.meta.url), 'API Server is up and running!')
+})
