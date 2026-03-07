@@ -1,25 +1,38 @@
+import { fileURLToPath } from 'url'
 import DbConn from '../configs/DbConn.js'
-import * as log from '../utils/log.js'
+import { errorJson } from '../utils/errorTemplate.js';
 
+const getBank = (id) => {
+  let sql = 'SELECT id, name, description FROM banks WHERE id = ?';
 
-const getBanks = async () => {
-  let sql = 'SELECT id, name, description FROM banks'
-
-  let records = await new Promise(resolve => {
-    let result = null
-
-    DbConn.conn.query(sql, (err, data) => {
+  return new Promise(resolve => {
+    DbConn.conn.query(sql, [id], (err, data) => {
+      let result = null
       if(err)
-        log.error(log.fileURLToPath(import.meta.url), err)
+        result = errorJson(fileURLToPath(import.meta.url), 'Unable to fetch bank.', err)
       else
         result = data
       resolve(result)
     })
   })
+}
 
-  return records
+const getBanks = () => {
+  let sql = 'SELECT id, name, description FROM banks'
+
+  return new Promise(resolve => {
+    DbConn.conn.query(sql, (err, data) => {
+      let result = null
+      if(err)
+        result = errorJson(fileURLToPath(import.meta.url), 'Unable to fetch banks.', err)
+      else
+        result = data
+      resolve(result)
+    })
+  })
 }
 
 export {
+  getBank,
   getBanks
 }

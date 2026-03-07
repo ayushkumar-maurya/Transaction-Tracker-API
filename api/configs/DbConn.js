@@ -1,4 +1,5 @@
 import mysql from 'mysql2'
+import { fileURLToPath } from 'url'
 import * as log from '../utils/log.js'
 
 class DbConn {
@@ -16,9 +17,9 @@ class DbConn {
 
     tempConn.connect(err => {
       if(err)
-        log.error(log.fileURLToPath(import.meta.url), 'Database connection unsuccessful!', err)
+        log.error(fileURLToPath(import.meta.url), 'Database connection unsuccessful!', err)
       else
-        log.info(log.fileURLToPath(import.meta.url), 'Database connected successfully!')
+        log.info(fileURLToPath(import.meta.url), 'Database connected successfully!')
     })
 
     DbConn.conn = tempConn

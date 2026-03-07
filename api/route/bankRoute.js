@@ -3,6 +3,10 @@ import * as bankService from '../service/bankService.js'
 
 const router = express.Router()
 
+router.get('/bank', async (req, res) => {
+  res.json(await bankService.getBank(req.body))
+})
+
 router.get('/banks', async (req, res) => {
   res.json(await bankService.getBanks())
 })

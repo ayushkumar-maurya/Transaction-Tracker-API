@@ -1,4 +1,3 @@
-import { fileURLToPath } from 'url'
 import chalk from 'chalk'
 
 const handleLog = (type, loc, ...msgs) => {
@@ -16,4 +15,4 @@ const error = (loc, ...msgs) => {
   handleLog(chalk.red('ERROR'), loc, ...msgs)
 }
 
-export { info, error, fileURLToPath }
+export { info, error }
