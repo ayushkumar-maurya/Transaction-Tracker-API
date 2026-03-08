@@ -2,7 +2,7 @@ import { fileURLToPath } from 'url'
 import DbConn from '../configs/DbConn.js'
 import { errorJson } from '../utils/errorTemplate.js';
 
-const getBank = (id) => {
+const getBank = id => {
   let sql = 'SELECT id, name, description FROM banks WHERE id = ?';
 
   return new Promise(resolve => {
@@ -10,6 +10,36 @@ const getBank = (id) => {
       let result = null
       if(err)
         result = errorJson(fileURLToPath(import.meta.url), 'Unable to fetch bank.', err)
+      else if(data.length > 0)
+        result = data[0]
+      resolve(result)
+    })
+  })
+}
+
+const getBankFromName = name => {
+  let sql = 'SELECT id, name FROM banks WHERE name = ?';
+
+  return new Promise(resolve => {
+    DbConn.conn.query(sql, [name], (err, data) => {
+      let result = null
+      if(err)
+        result = errorJson(fileURLToPath(import.meta.url), 'Unable to fetch bank.', err)
+      else if(data.length > 0)
+        result = data[0]
+      resolve(result)
+    })
+  })
+}
+
+const addBank = ({ name, description }) => {
+  let sql = 'INSERT INTO banks (name, description) VALUES (?, ?)';
+
+  return new Promise(resolve => {
+    DbConn.conn.query(sql, [name, description], (err, data) => {
+      let result = null
+      if(err)
+        result = errorJson(fileURLToPath(import.meta.url), 'Unable to add bank.', err)
       else
         result = data
       resolve(result)
@@ -34,5 +64,7 @@ const getBanks = () => {
 
 export {
   getBank,
+  getBankFromName,
+  addBank,
   getBanks
 }

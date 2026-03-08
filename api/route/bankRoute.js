@@ -7,6 +7,10 @@ router.get('/bank', async (req, res) => {
   res.json(await bankService.getBank(req.body))
 })
 
+router.post('/bank', async (req, res) => {
+  res.json(await bankService.addBank(req.body))
+})
+
 router.get('/banks', async (req, res) => {
   res.json(await bankService.getBanks())
 })
