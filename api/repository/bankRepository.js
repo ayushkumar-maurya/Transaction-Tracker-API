@@ -9,7 +9,7 @@ const getBank = id => {
     DbConn.conn.query(sql, [id], (err, data) => {
       let result = null
       if(err)
-        result = errorJson(fileURLToPath(import.meta.url), 'Unable to fetch bank.', err)
+        result = errorJson(fileURLToPath(import.meta.url), 'Unable to fetch bank!', err)
       else if(data.length > 0)
         result = data[0]
       resolve(result)
@@ -24,7 +24,7 @@ const getBankFromName = name => {
     DbConn.conn.query(sql, [name], (err, data) => {
       let result = null
       if(err)
-        result = errorJson(fileURLToPath(import.meta.url), 'Unable to fetch bank.', err)
+        result = errorJson(fileURLToPath(import.meta.url), 'Unable to fetch bank!', err)
       else if(data.length > 0)
         result = data[0]
       resolve(result)
@@ -39,7 +39,7 @@ const addBank = ({ name, description }) => {
     DbConn.conn.query(sql, [name, description], (err, data) => {
       let result = null
       if(err)
-        result = errorJson(fileURLToPath(import.meta.url), 'Unable to add bank.', err)
+        result = errorJson(fileURLToPath(import.meta.url), 'Unable to add bank!', err)
       else
         result = data
       resolve(result)
@@ -54,7 +54,7 @@ const getBanks = () => {
     DbConn.conn.query(sql, (err, data) => {
       let result = null
       if(err)
-        result = errorJson(fileURLToPath(import.meta.url), 'Unable to fetch banks.', err)
+        result = errorJson(fileURLToPath(import.meta.url), 'Unable to fetch banks!', err)
       else
         result = data
       resolve(result)

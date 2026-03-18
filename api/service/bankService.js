@@ -1,42 +1,43 @@
 import { fileURLToPath } from 'url'
 import * as bankRepository from '../repository/bankRepository.js'
-import { errorPromise } from '../utils/errorTemplate.js'
+import { errorJson } from '../utils/errorTemplate.js'
 
 const getBank = async (reqData) => {
   if(reqData && reqData.id)
     return await bankRepository.getBank(reqData.id)
-  return await errorPromise(fileURLToPath(import.meta.url), 'Please provide valid Bank ID.')
+  return errorJson(fileURLToPath(import.meta.url), 'Please provide valid Bank ID!')
 }
 
 const addBank = async (reqData) => {
-  let errorMsg = 'Unable to add bank.'
+  try {
+    if(!reqData)
+      throw new Error('Some error occurred while adding Bank. Please try again!')
 
-  if(reqData) {
-    let name = null
-    let description = null
+    let name = reqData.name
+    let description = reqData.description
 
-    if(reqData.name)
-      name = reqData.name.trim()
-    if(reqData.description)
-      description = reqData.description.trim()
+    if(!name)
+      throw new Error('Please enter bank name!')
+    name = name.trim()
+    if(name.length === 0)
+      throw new Error('Please enter valid bank name!')
 
-    if(name) {
-      const existingBank = await bankRepository.getBankFromName(name)
-      if(!existingBank) {
-        const result = await bankRepository.addBank({ name, description })
-        if(result.insertId)
-          return { insertedId: result.insertId }
-        else if(result.error)
-          return result
-      }
-      else if(existingBank.name)
-        errorMsg = `Bank with name ${name} already exists.`
-    }
-    else
-      errorMsg = 'Please provide valid Bank name.'
+    if(description)
+      description = description.trim()
+
+    const existingBank = await bankRepository.getBankFromName(name)
+    if(existingBank && existingBank.name)
+      throw new Error(`Bank with name ${name} already exists!`)
+
+    const result = await bankRepository.addBank({ name, description })
+    if(result && result.insertId)
+      return { insertedId: result.insertId }
+    
+    throw new Error('Some error occurred while adding Bank. Please try again!')
   }
-
-  return await errorPromise(fileURLToPath(import.meta.url), errorMsg)
+  catch(err) {
+    return errorJson(fileURLToPath(import.meta.url), err.message)
+  }
 }
 
 const getBanks = async () => {
