@@ -47,6 +47,21 @@ const addBank = ({ name, description }) => {
   })
 }
 
+const updateBank = ({ id, name, description }) => {
+  let sql = 'UPDATE banks SET name = ?, description = ? WHERE id = ?';
+
+  return new Promise(resolve => {
+    DbConn.conn.query(sql, [name, description, id], (err, data) => {
+      let result = null
+      if(err)
+        result = errorJson(fileURLToPath(import.meta.url), 'Unable to update bank!', err)
+      else
+        result = data
+      resolve(result)
+    })
+  })
+}
+
 const getBanks = () => {
   let sql = 'SELECT id, name, description FROM banks'
 
@@ -66,5 +81,6 @@ export {
   getBank,
   getBankFromName,
   addBank,
+  updateBank,
   getBanks
 }

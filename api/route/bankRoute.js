@@ -11,6 +11,10 @@ router.post('/bank', async (req, res) => {
   res.json(await bankService.addBank(req.body))
 })
 
+router.put('/bank', async (req, res) => {
+  res.json(await bankService.updateBank(req.body))
+})
+
 router.get('/banks', async (req, res) => {
   res.json(await bankService.getBanks())
 })
