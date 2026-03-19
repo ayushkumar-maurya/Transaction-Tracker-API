@@ -80,6 +80,27 @@ const updateBank = async (reqData) => {
   }
 }
 
+const deleteBank = async (reqData) => {
+  try {
+    if(!reqData)
+      throw new Error('Some error occurred while deleting Bank. Please try again!')
+
+    let id = reqData.id
+
+    if(!id)
+      throw new Error('Please provide Bank ID!')
+
+    const result = await bankRepository.deleteBank(id)
+    if(result && result.affectedRows)
+      return { affectedRows: result.affectedRows }
+    
+    throw new Error('Some error occurred while deleting Bank. Please try again!')
+  }
+  catch(err) {
+    return errorJson(fileURLToPath(import.meta.url), err.message)
+  }
+}
+
 const getBanks = async () => {
   return await bankRepository.getBanks()
 }
@@ -88,5 +109,6 @@ export {
   getBank,
   addBank,
   updateBank,
+  deleteBank,
   getBanks
 }

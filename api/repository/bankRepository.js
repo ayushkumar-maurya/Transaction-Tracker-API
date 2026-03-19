@@ -62,6 +62,21 @@ const updateBank = ({ id, name, description }) => {
   })
 }
 
+const deleteBank = id => {
+  let sql = 'DELETE FROM banks WHERE id = ?';
+
+  return new Promise(resolve => {
+    DbConn.conn.query(sql, [id], (err, data) => {
+      let result = null
+      if(err)
+        result = errorJson(fileURLToPath(import.meta.url), 'Unable to delete bank!', err)
+      else
+        result = data
+      resolve(result)
+    })
+  })
+}
+
 const getBanks = () => {
   let sql = 'SELECT id, name, description FROM banks'
 
@@ -82,5 +97,6 @@ export {
   getBankFromName,
   addBank,
   updateBank,
+  deleteBank,
   getBanks
 }
