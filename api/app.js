@@ -17,7 +17,7 @@ try {
   await ParentCategories.init()
 }
 catch(err) {
-  log.info(fileURLToPath(import.meta.url), 'Unable to perform database operations!')
+  log.error(fileURLToPath(import.meta.url), 'Unable to perform database operations!')
 }
 
 app.use(express.json());

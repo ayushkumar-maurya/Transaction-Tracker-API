@@ -1,16 +1,16 @@
 import { fileURLToPath } from 'url'
 import * as categoryRepository from '../repository/categoryRepository.js'
 import ParentCategories from '../configs/ParentCategories.js'
-import { errorJson } from '../utils/errorTemplate.js'
+import { notifyError } from '../utils/log.js'
 
 const getCategory = async (reqData, parentName) => {
   if(reqData && reqData.id) {
     let result = await categoryRepository.getCategory(reqData.id, ParentCategories.getId(parentName))
     if(result && result.id)
       return result
-    return errorJson(fileURLToPath(import.meta.url), 'Unable to retrieve the details!')
+    return notifyError(fileURLToPath(import.meta.url), 'Unable to retrieve the details!')
   }
-  return errorJson(fileURLToPath(import.meta.url), 'Please provide valid ID!')
+  return notifyError(fileURLToPath(import.meta.url), 'Please provide valid ID!')
 }
 
 const addCategory = async (reqData, parentName) => {
@@ -41,7 +41,7 @@ const addCategory = async (reqData, parentName) => {
     throw new Error('Some error occurred. Please try again!')
   }
   catch(err) {
-    return errorJson(fileURLToPath(import.meta.url), err.message)
+    return notifyError(fileURLToPath(import.meta.url), err.message)
   }
 }
 
@@ -77,7 +77,7 @@ const updateCategory = async (reqData, parentName) => {
     throw new Error('Some error occurred. Please try again!')
   }
   catch(err) {
-    return errorJson(fileURLToPath(import.meta.url), err.message)
+    return notifyError(fileURLToPath(import.meta.url), err.message)
   }
 }
 
@@ -98,7 +98,7 @@ const deleteCategory = async (reqData, parentName) => {
     throw new Error('Some error occurred. Please try again!')
   }
   catch(err) {
-    return errorJson(fileURLToPath(import.meta.url), err.message)
+    return notifyError(fileURLToPath(import.meta.url), err.message)
   }
 }
 
