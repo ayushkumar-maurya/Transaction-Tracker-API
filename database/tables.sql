@@ -12,7 +12,7 @@ CREATE TABLE categories (
     description VARCHAR(200),
     PRIMARY KEY (id),
     FOREIGN KEY (parent_id) REFERENCES parent_categories(id) ON DELETE CASCADE,
-    UNIQUE (name)
+    UNIQUE (parent_id, name)
 );
 
 CREATE TABLE transactions (
