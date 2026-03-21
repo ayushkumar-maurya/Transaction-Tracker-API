@@ -1,17 +1,23 @@
-/*---------------------------------------------------------
-Bank Transactions
----------------------------------------------------------*/
-CREATE TABLE banks (
-    id INT AUTO_INCREMENT,
+CREATE TABLE parent_categories (
+    id INT,
     name VARCHAR(50) NOT NULL,
-    description VARCHAR(200),
     PRIMARY KEY (id),
     UNIQUE (name)
 );
 
-CREATE TABLE bank_transactions (
+CREATE TABLE categories (
     id INT AUTO_INCREMENT,
-    bank_id INT NOT NULL,
+    parent_id INT NOT NULL,
+    name VARCHAR(50) NOT NULL,
+    description VARCHAR(200),
+    PRIMARY KEY (id),
+    FOREIGN KEY (parent_id) REFERENCES parent_categories(id) ON DELETE CASCADE,
+    UNIQUE (name)
+);
+
+CREATE TABLE transactions (
+    id INT AUTO_INCREMENT,
+    category_id INT NOT NULL,
     date DATE NOT NULL DEFAULT (CURRENT_DATE),
     description VARCHAR(100),
     deposit DECIMAL(10, 2),
@@ -19,6 +25,6 @@ CREATE TABLE bank_transactions (
     remark VARCHAR(200),
     created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (id),
-    FOREIGN KEY (bank_id) REFERENCES banks(id) ON DELETE CASCADE,
+    FOREIGN KEY (category_id) REFERENCES categories(id) ON DELETE CASCADE,
     CHECK (deposit IS NOT NULL OR withdrawal IS NOT NULL)
 );

@@ -2,6 +2,7 @@ import express from 'express'
 import dotenv from 'dotenv'
 import { fileURLToPath } from 'url'
 import DbConn from './configs/DbConn.js'
+import ParentCategories from './configs/ParentCategories.js'
 import * as log from './utils/log.js'
 
 import homeRoute from './route/HomeRoute.js'
@@ -10,7 +11,14 @@ import bankRoute from './route/bankRoute.js'
 
 const app = express()
 dotenv.config()
-DbConn.init()
+
+try {
+  await DbConn.init()
+  await ParentCategories.init()
+}
+catch(err) {
+  log.info(fileURLToPath(import.meta.url), 'Unable to perform database operations!')
+}
 
 app.use(express.json());
 
