@@ -7,7 +7,7 @@ import * as log from './utils/log.js'
 
 import homeRoute from './route/HomeRoute.js'
 import bankRoute from './route/bankRoute.js'
-
+import creditCardRoute from './route/creditCardRoute.js'
 
 const app = express()
 dotenv.config()
@@ -24,6 +24,7 @@ app.use(express.json());
 
 app.use('/', homeRoute)
 app.use('/bank', bankRoute)
+app.use('/creditcard', creditCardRoute)
 
 const PORT = process.env.PORT
 app.listen(PORT, () => {
