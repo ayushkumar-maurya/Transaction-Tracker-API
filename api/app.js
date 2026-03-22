@@ -10,6 +10,7 @@ import bankRoute from './route/bankRoute.js'
 import creditCardRoute from './route/creditCardRoute.js'
 import stockRoute from './route/stockRoute.js'
 import mutualFundRoute from './route/mutualFundRoute.js'
+import miscCategoryRoute from './route/miscCategoryRoute.js'
 
 const app = express()
 dotenv.config()
@@ -29,6 +30,7 @@ app.use('/bank', bankRoute)
 app.use('/creditcard', creditCardRoute)
 app.use('/stock', stockRoute)
 app.use('/mutualfund', mutualFundRoute)
+app.use('/misccategory', miscCategoryRoute)
 
 const PORT = process.env.PORT
 app.listen(PORT, () => {
