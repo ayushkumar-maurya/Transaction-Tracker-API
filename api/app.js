@@ -30,7 +30,7 @@ app.use('/bank', bankRoute)
 app.use('/creditcard', creditCardRoute)
 app.use('/stock', stockRoute)
 app.use('/mutualfund', mutualFundRoute)
-app.use('/misccategory', miscCategoryRoute)
+app.use('/misc', miscCategoryRoute)
 
 const PORT = process.env.PORT
 app.listen(PORT, () => {
