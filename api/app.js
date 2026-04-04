@@ -1,4 +1,5 @@
 import express from 'express'
+import cors from 'cors'
 import dotenv from 'dotenv'
 import { fileURLToPath } from 'url'
 import DbConn from './configs/DbConn.js'
@@ -22,6 +23,12 @@ try {
 catch(err) {
   log.error(fileURLToPath(import.meta.url), 'Unable to perform database operations!')
 }
+
+app.use(cors({
+  origin: process.env.WEB_APP_URL,
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type']
+}))
 
 app.use(express.json());
 
