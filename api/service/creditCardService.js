@@ -1,31 +1,31 @@
 import * as categoryService from './categoryService.js'
 
-const serviceName = 'BANK'
+const serviceName = 'CREDIT_CARD'
 
-const getBank = async (reqData) => {
+const getCreditCard = async (reqData) => {
   return await categoryService.getCategory(reqData, serviceName)
 }
 
-const addBank = async (reqData) => {
+const addCreditCard = async (reqData) => {
   return await categoryService.addCategory(reqData, serviceName)
 }
 
-const updateBank = async (reqData) => {
+const updateCreditCard = async (reqData) => {
   return await categoryService.updateCategory(reqData, serviceName)
 }
 
-const deleteBank = async (reqData) => {
+const deleteCreditCard = async (reqData) => {
   return await categoryService.deleteCategory(reqData, serviceName)
 }
 
-const getBanks = async () => {
+const getCreditCards = async () => {
   return await categoryService.getCategories(serviceName)
 }
 
 export {
-  getBank,
-  addBank,
-  updateBank,
-  deleteBank,
-  getBanks
+  getCreditCard,
+  addCreditCard,
+  updateCreditCard,
+  deleteCreditCard,
+  getCreditCards
 }
