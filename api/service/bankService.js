@@ -1,4 +1,5 @@
 import * as categoryService from './categoryService.js'
+import * as transactionService from './transactionService.js'
 
 const serviceName = 'BANK'
 
@@ -22,10 +23,15 @@ const getBanks = async () => {
   return await categoryService.getCategories(serviceName)
 }
 
+const getTransaction = async (reqData) => {
+  return await transactionService.getTransaction(reqData, serviceName)
+}
+
 export {
   getBank,
   addBank,
   updateBank,
   deleteBank,
-  getBanks
+  getBanks,
+  getTransaction
 }

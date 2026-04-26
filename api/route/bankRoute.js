@@ -23,4 +23,8 @@ router.get('/banks', async (req, res) => {
   res.json(await bankService.getBanks())
 })
 
+router.get('/transaction', async (req, res) => {
+  res.json(await bankService.getTransaction(req.body))
+})
+
 export default router

@@ -23,4 +23,8 @@ router.get('/mutualfunds', async (req, res) => {
   res.json(await mutualFundService.getMutualFunds())
 })
 
+router.get('/transaction', async (req, res) => {
+  res.json(await mutualFundService.getTransaction(req.body))
+})
+
 export default router

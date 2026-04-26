@@ -23,4 +23,8 @@ router.get('/stocks', async (req, res) => {
   res.json(await stockService.getStocks())
 })
 
+router.get('/transaction', async (req, res) => {
+  res.json(await stockService.getTransaction(req.body))
+})
+
 export default router

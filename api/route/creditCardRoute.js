@@ -23,4 +23,8 @@ router.get('/creditcards', async (req, res) => {
   res.json(await creditCardService.getCreditCards())
 })
 
+router.get('/transaction', async (req, res) => {
+  res.json(await creditCardService.getTransaction(req.body))
+})
+
 export default router

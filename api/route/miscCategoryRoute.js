@@ -23,4 +23,8 @@ router.get('/misccategories', async (req, res) => {
   res.json(await miscCategoryService.getMiscCategories())
 })
 
+router.get('/transaction', async (req, res) => {
+  res.json(await miscCategoryService.getTransaction(req.body))
+})
+
 export default router
