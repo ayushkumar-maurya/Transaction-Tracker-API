@@ -2,6 +2,7 @@ import { fileURLToPath } from 'url'
 import * as transactionRepository from '../repository/transactionRepository.js'
 import ParentCategories from '../configs/ParentCategories.js'
 import { notifyError } from '../utils/log.js'
+import { getCategory } from './categoryService.js'
 
 const getTransaction = async (reqData, parentName) => {
   if(reqData && reqData.id) {
@@ -40,12 +41,14 @@ const addTransaction = async (reqData, parentName) => {
     if(remark)
       remark = remark.trim()
 
-    if(categoryId === ParentCategories.getId(parentName)) {
-      const result = await transactionRepository.addTransaction(categoryId, date, description, deposit, withdrawal, remark)
-      if(result && result.insertId)
-        return { insertedId: result.insertId }
-    }
-    
+    let category = await getCategory({ id: categoryId }, parentName)
+    if(!(category && category.id))
+      throw new Error('Incorrect data provided!')
+
+    const result = await transactionRepository.addTransaction(categoryId, date, description, deposit, withdrawal, remark)
+    if(result && result.insertId)
+      return { insertedId: result.insertId }
+
     throw new Error('Some error occurred. Please try again!')
   }
   catch(err) {
