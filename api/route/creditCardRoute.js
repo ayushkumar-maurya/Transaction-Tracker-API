@@ -27,4 +27,20 @@ router.get('/transaction', async (req, res) => {
   res.json(await creditCardService.getTransaction(req.body))
 })
 
+router.post('/transaction', async (req, res) => {
+  res.json(await creditCardService.addTransaction(req.body))
+})
+
+router.put('/transaction', async (req, res) => {
+  res.json(await creditCardService.updateTransaction(req.body))
+})
+
+router.delete('/transaction', async (req, res) => {
+  res.json(await creditCardService.deleteTransaction(req.body))
+})
+
+router.get('/transactions', async (req, res) => {
+  res.json(await creditCardService.getTransactions())
+})
+
 export default router
