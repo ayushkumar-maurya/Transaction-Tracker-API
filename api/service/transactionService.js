@@ -13,6 +13,47 @@ const getTransaction = async (reqData, parentName) => {
   return notifyError(fileURLToPath(import.meta.url), 'Please provide valid ID!')
 }
 
+const addTransaction = async (reqData, parentName) => {
+  try {
+    if(!reqData)
+      throw new Error('Some error occurred. Please try again!')
+
+    let categoryId = reqData.categoryId
+    let date = reqData.date
+    let description = reqData.description
+    let deposit = reqData.deposit
+    let withdrawal = reqData.withdrawal
+    let remark = reqData.remark
+
+    if(!categoryId)
+      throw new Error('Please mention Category ID!')
+
+    if(date && !(/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/.test(date)))
+      throw new Error('Please mention date in correct format i.e., YYYY-MM-DD!')
+
+    if(description)
+      description = description.trim()
+
+    if(!deposit && !withdrawal)
+      throw new Error('Please mention either deposit or withdrawal amount!')
+
+    if(remark)
+      remark = remark.trim()
+
+    if(categoryId === ParentCategories.getId(parentName)) {
+      const result = await transactionRepository.addTransaction(categoryId, date, description, deposit, withdrawal, remark)
+      if(result && result.insertId)
+        return { insertedId: result.insertId }
+    }
+    
+    throw new Error('Some error occurred. Please try again!')
+  }
+  catch(err) {
+    return notifyError(fileURLToPath(import.meta.url), err.message)
+  }
+}
+
 export {
-  getTransaction
+  getTransaction,
+  addTransaction
 }

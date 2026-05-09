@@ -33,6 +33,25 @@ const getTransaction = (id, parentId) => {
   })
 }
 
+const addTransaction = (categoryId, date, description, deposit, withdrawal, remark) => {
+  const sql = `
+    INSERT INTO transactions (category_id, date, description, deposit, withdrawal, remark)
+    VALUES (?, COALESCE(?, CURRENT_DATE), ?, ?, ?, ?)
+  `
+
+  return new Promise(resolve => {
+    DbConn.conn.query(sql, [categoryId, date, description, deposit, withdrawal, remark], (err, data) => {
+      let result = null
+      if(err)
+        result = log.error(fileURLToPath(import.meta.url), err)
+      else
+        result = data
+      resolve(result)
+    })
+  })
+}
+
 export {
-  getTransaction
+  getTransaction,
+  addTransaction
 }

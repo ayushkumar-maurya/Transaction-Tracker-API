@@ -27,11 +27,16 @@ const getTransaction = async (reqData) => {
   return await transactionService.getTransaction(reqData, serviceName)
 }
 
+const addTransaction = async (reqData) => {
+  return await transactionService.addTransaction(reqData, serviceName)
+}
+
 export {
   getBank,
   addBank,
   updateBank,
   deleteBank,
   getBanks,
-  getTransaction
+  getTransaction,
+  addTransaction
 }
