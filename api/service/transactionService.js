@@ -131,9 +131,14 @@ const deleteTransaction = async (reqData, parentName) => {
   }
 }
 
+const getTransactions = async (parentName) => {
+  return await transactionRepository.getTransactions(ParentCategories.getId(parentName))
+}
+
 export {
   getTransaction,
   addTransaction,
   updateTransaction,
-  deleteTransaction
+  deleteTransaction,
+  getTransactions
 }

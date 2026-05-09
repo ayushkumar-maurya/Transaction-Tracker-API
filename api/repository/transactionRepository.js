@@ -90,9 +90,41 @@ const deleteTransaction = (id) => {
   })
 }
 
+const getTransactions = parentId => {
+  const sql = `
+    SELECT
+      t.id,
+      t.category_id,
+      c.name AS category_name,
+      t.date,
+      t.description,
+      t.deposit,
+      t.withdrawal,
+      t.remark,
+      t.created_at
+    FROM transactions t
+    INNER JOIN categories c
+    ON t.category_id = c.id
+    WHERE c.parent_id = ?
+    ORDER BY t.date DESC, t.created_at DESC
+  `
+
+  return new Promise(resolve => {
+    DbConn.conn.query(sql, [parentId], (err, data) => {
+      let result = null
+      if(err)
+        result = log.error(fileURLToPath(import.meta.url), err)
+      else
+        result = data
+      resolve(result)
+    })
+  })
+}
+
 export {
   getTransaction,
   addTransaction,
   updateTransaction,
-  deleteTransaction
+  deleteTransaction,
+  getTransactions
 }

@@ -39,4 +39,8 @@ router.delete('/transaction', async (req, res) => {
   res.json(await bankService.deleteTransaction(req.body))
 })
 
+router.get('/transactions', async (req, res) => {
+  res.json(await bankService.getTransactions())
+})
+
 export default router
