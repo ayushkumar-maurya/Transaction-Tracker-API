@@ -27,4 +27,20 @@ router.get('/transaction', async (req, res) => {
   res.json(await stockService.getTransaction(req.body))
 })
 
+router.post('/transaction', async (req, res) => {
+  res.json(await stockService.addTransaction(req.body))
+})
+
+router.put('/transaction', async (req, res) => {
+  res.json(await stockService.updateTransaction(req.body))
+})
+
+router.delete('/transaction', async (req, res) => {
+  res.json(await stockService.deleteTransaction(req.body))
+})
+
+router.get('/transactions', async (req, res) => {
+  res.json(await stockService.getTransactions())
+})
+
 export default router
