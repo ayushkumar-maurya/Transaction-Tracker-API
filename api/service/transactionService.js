@@ -41,6 +41,7 @@ const addTransaction = async (reqData, parentName) => {
     if(remark)
       remark = remark.trim()
 
+    // Checking whether the category belongs to correct parent category.
     let category = await getCategory({ id: categoryId }, parentName)
     if(!(category && category.id))
       throw new Error('Incorrect data provided!')
@@ -56,7 +57,56 @@ const addTransaction = async (reqData, parentName) => {
   }
 }
 
+
+const updateTransaction = async (reqData, parentName) => {
+  try {
+    if(!reqData)
+      throw new Error('Some error occurred. Please try again!')
+
+    let id = reqData.id
+    let categoryId = reqData.categoryId
+    let date = reqData.date
+    let description = reqData.description
+    let deposit = reqData.deposit
+    let withdrawal = reqData.withdrawal
+    let remark = reqData.remark
+
+    if(!id)
+      throw new Error('Please provide ID!')
+
+    if(!categoryId)
+      throw new Error('Please mention Category ID!')
+
+    if(date && !(/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/.test(date)))
+      throw new Error('Please mention date in correct format i.e., YYYY-MM-DD!')
+
+    if(description)
+      description = description.trim()
+
+    if(!deposit && !withdrawal)
+      throw new Error('Please mention either deposit or withdrawal amount!')
+
+    if(remark)
+      remark = remark.trim()
+
+    // Checking whether the category belongs to correct parent category.
+    let category = await getCategory({ id: categoryId }, parentName)
+    if(!(category && category.id))
+      throw new Error('Incorrect data provided!')
+
+    const result = await transactionRepository.updateTransaction(id, categoryId, date, description, deposit, withdrawal, remark)
+    if(result && result.affectedRows)
+      return { affectedRows: result.affectedRows }
+    
+    throw new Error('Some error occurred. Please try again!')
+  }
+  catch(err) {
+    return notifyError(fileURLToPath(import.meta.url), err.message)
+  }
+}
+
 export {
   getTransaction,
-  addTransaction
+  addTransaction,
+  updateTransaction
 }

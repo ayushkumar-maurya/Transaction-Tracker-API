@@ -51,7 +51,32 @@ const addTransaction = (categoryId, date, description, deposit, withdrawal, rema
   })
 }
 
+const updateTransaction = (id, categoryId, date, description, deposit, withdrawal, remark) => {
+  const sql = `
+    UPDATE transactions
+    SET category_id = ?,
+        date = COALESCE(?, CURRENT_DATE),
+        description = ?,
+        deposit = ?,
+        withdrawal = ?,
+        remark = ?
+    WHERE id = ?
+  `
+
+  return new Promise(resolve => {
+    DbConn.conn.query(sql, [categoryId, date, description, deposit, withdrawal, remark, id], (err, data) => {
+      let result = null
+      if(err)
+        result = log.error(fileURLToPath(import.meta.url), err)
+      else
+        result = data
+      resolve(result)
+    })
+  })
+}
+
 export {
   getTransaction,
-  addTransaction
+  addTransaction,
+  updateTransaction
 }

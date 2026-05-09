@@ -31,6 +31,10 @@ const addTransaction = async (reqData) => {
   return await transactionService.addTransaction(reqData, serviceName)
 }
 
+const updateTransaction = async (reqData) => {
+  return await transactionService.updateTransaction(reqData, serviceName)
+}
+
 export {
   getBank,
   addBank,
@@ -38,5 +42,6 @@ export {
   deleteBank,
   getBanks,
   getTransaction,
-  addTransaction
+  addTransaction,
+  updateTransaction
 }

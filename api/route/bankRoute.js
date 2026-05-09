@@ -31,4 +31,8 @@ router.post('/transaction', async (req, res) => {
   res.json(await bankService.addTransaction(req.body))
 })
 
+router.put('/transaction', async (req, res) => {
+  res.json(await bankService.updateTransaction(req.body))
+})
+
 export default router
