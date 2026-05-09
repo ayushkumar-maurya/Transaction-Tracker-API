@@ -27,11 +27,31 @@ const getTransaction = async (reqData) => {
   return await transactionService.getTransaction(reqData, serviceName)
 }
 
+const addTransaction = async (reqData) => {
+  return await transactionService.addTransaction(reqData, serviceName)
+}
+
+const updateTransaction = async (reqData) => {
+  return await transactionService.updateTransaction(reqData, serviceName)
+}
+
+const deleteTransaction = async (reqData) => {
+  return await transactionService.deleteTransaction(reqData, serviceName)
+}
+
+const getTransactions = async () => {
+  return await transactionService.getTransactions(serviceName)
+}
+
 export {
   getMiscCategory,
   addMiscCategory,
   updateMiscCategory,
   deleteMiscCategory,
   getMiscCategories,
-  getTransaction
+  getTransaction,
+  addTransaction,
+  updateTransaction,
+  deleteTransaction,
+  getTransactions
 }
