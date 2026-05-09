@@ -27,4 +27,20 @@ router.get('/transaction', async (req, res) => {
   res.json(await mutualFundService.getTransaction(req.body))
 })
 
+router.post('/transaction', async (req, res) => {
+  res.json(await mutualFundService.addTransaction(req.body))
+})
+
+router.put('/transaction', async (req, res) => {
+  res.json(await mutualFundService.updateTransaction(req.body))
+})
+
+router.delete('/transaction', async (req, res) => {
+  res.json(await mutualFundService.deleteTransaction(req.body))
+})
+
+router.get('/transactions', async (req, res) => {
+  res.json(await mutualFundService.getTransactions())
+})
+
 export default router
