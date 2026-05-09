@@ -105,8 +105,35 @@ const updateTransaction = async (reqData, parentName) => {
   }
 }
 
+const deleteTransaction = async (reqData, parentName) => {
+  try {
+    if(!reqData)
+      throw new Error('Some error occurred. Please try again!')
+
+    let id = reqData.id
+
+    if(!id)
+      throw new Error('Please provide ID!')
+
+    // Checking whether the transaction belongs to correct parent category.
+    let transaction = await transactionRepository.getTransaction(id, ParentCategories.getId(parentName))
+    if(!(transaction && transaction.id))
+      throw new Error('Incorrect data provided!')
+
+    const result = await transactionRepository.deleteTransaction(id)
+    if(result && result.affectedRows)
+      return { affectedRows: result.affectedRows }
+    
+    throw new Error('Some error occurred. Please try again!')
+  }
+  catch(err) {
+    return notifyError(fileURLToPath(import.meta.url), err.message)
+  }
+}
+
 export {
   getTransaction,
   addTransaction,
-  updateTransaction
+  updateTransaction,
+  deleteTransaction
 }

@@ -75,8 +75,24 @@ const updateTransaction = (id, categoryId, date, description, deposit, withdrawa
   })
 }
 
+const deleteTransaction = (id) => {
+  const sql = 'DELETE FROM transactions WHERE id = ?'
+
+  return new Promise(resolve => {
+    DbConn.conn.query(sql, [id], (err, data) => {
+      let result = null
+      if(err)
+        result = log.error(fileURLToPath(import.meta.url), err)
+      else
+        result = data
+      resolve(result)
+    })
+  })
+}
+
 export {
   getTransaction,
   addTransaction,
-  updateTransaction
+  updateTransaction,
+  deleteTransaction
 }
