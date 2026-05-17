@@ -8,12 +8,12 @@ const getTransaction = (id, parentId) => {
       t.id,
       t.category_id,
       c.name AS category_name,
-      t.date,
+      DATE_FORMAT(t.date, '%Y-%m-%d') AS date,
       t.description,
       t.deposit,
       t.withdrawal,
       t.remark,
-      t.created_at
+      DATE_FORMAT(t.created_at, '%Y-%m-%d') AS created_at
     FROM transactions t
     INNER JOIN categories c
     ON t.category_id = c.id
@@ -96,12 +96,12 @@ const getTransactions = parentId => {
       t.id,
       t.category_id,
       c.name AS category_name,
-      t.date,
+      DATE_FORMAT(t.date, '%Y-%m-%d') AS date,
       t.description,
       t.deposit,
       t.withdrawal,
       t.remark,
-      t.created_at
+      DATE_FORMAT(t.created_at, '%Y-%m-%d') AS created_at
     FROM transactions t
     INNER JOIN categories c
     ON t.category_id = c.id
