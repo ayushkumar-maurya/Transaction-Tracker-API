@@ -29,7 +29,7 @@ const addTransaction = async (reqData, parentName) => {
     if(!categoryId)
       throw new Error('Please mention Category ID!')
 
-    if(date && !(/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/.test(date)))
+    if(date != null && !(/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/.test(date)))
       throw new Error('Please mention date in correct format i.e., YYYY-MM-DD!')
 
     if(description)
